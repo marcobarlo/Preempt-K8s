@@ -236,9 +236,10 @@ func (rsc *ReplicaSetController) Run(ctx context.Context, workers int) {
 	interval := time.NewTicker(20 * time.Millisecond)
 	// TODO: Ulysses improve parameteres number of workers
 	// Start workers critical reserved
-	go wait.UntilWithContext(ctx, rsc.workerAsSoonAsPossible, time.Second)
+	//go wait.UntilWithContext(ctx, rsc.workerAsSoonAsPossible, time.Second)
+	
 	// Start periodic workers
-	for i := 0; i < workers-1; i++ {
+	for i := 0; i < workers; i++ {
 		go wait.UntilWithContext(ctx, rsc.worker, time.Second)
 		klog.Infof("Delaying start of worker %d", i)
 		<-interval.C
